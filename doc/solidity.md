@@ -248,3 +248,16 @@ It Explicitly specifies the location of the data on the function declaration.
 type(uint256).max // 최대값
 type(uint256).min // 최소값
 ```
+
+## Self Destruct
+
+Contracts can be deleted from the blockchain by calling `selfdestruct`.
+`selfdestruct` sends all remaining Ether stored in the contract to a designated address.
+
+```solidity
+// Destroy contract and reclaim leftover funds.
+function kill() public {
+    require(msg.sender == owner);
+    selfdestruct(msg.sender);
+}
+```
