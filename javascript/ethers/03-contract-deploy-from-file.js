@@ -15,9 +15,14 @@ async function main() {
     let abi = fs.readFileSync('../../bin/javascript/ethers/solidity/ClassToken.abi');
     let bytecode = fs.readFileSync('../../bin/javascript/ethers/solidity/ClassToken.bin');
     let factory = new ContractFactory(abi.toString(), bytecode.toString(), sender);
-    let contract = await factory.deploy(initialSupply);
-    console.log(contract);
-    console.log("Contract Address", contract.address);
+    try {
+        let contract = await factory.deploy(initialSupply);
+        console.log("Contract Address", contract.address);
+        let receipt = await contract.deployTransaction.wait();
+        console.log(receipt);
+    } catch(error) {
+        console.log(error.error);
+    }
     // var str = JSON.stringify(obj, null, 2);
 }
 

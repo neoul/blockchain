@@ -189,3 +189,33 @@ export type TransactionRequest = {
 
 ![Deployment-process](https://www.researchgate.net/publication/357892985/figure/download/fig6/AS:1125027646832644@1645238901314/Deployment-process-of-Ethereum-smart-contract.png)
 
+
+## ethers.js
+
+The ethers.js library aims to be a complete and compact library for interacting with the Ethereum Blockchain and its ecosystem.
+
+- API Document: https://docs.ethers.io/v5/
+- Ariticle: https://dev.to/yakult/series/16611
+- `web3`보다 구조적 정리가 잘되어 사용하기 편함
+- Type Script로 구현되어 vscode 내에서 library에 대한 autocompleion 제공
+- js 대신 Type Script 사용에 대해 고려해볼만함
+- HD Wallet 사용법: https://github.com/bethanyuo/HD-wallet
+- HD wallet을 JSON file로 password와 함께 export 할 수는 없음
+- 다만, mnemonic과 HD Path로 ganache account를 예측/로드 가능
+- Wait for the transaction to be mined...
+ - TransactionRequest -> contract call -> TransactionResponse -> Transaction.wait(confirmation=1|0) -> done
+ - TransactionResponse는 node에 TX가 접수된 상황, not yet mined ...
+- State Change contract funtion 수행시 결과 받을 수 없음
+
+### Write Methods Analysis
+
+There are several options to analyze properties and results of a write method without actually executing it.
+
+- `contract.estimateGas.METHOD( ...args [ , overrides ] ) ⇒ Promise< BigNumber >`: Returns the estimate units of gas
+- `contract.populateTransaction.METHOD( ...args [ , overrides ] ) ⇒ Promise< UnsignedTx >`: Returns an UnsignedTransaction
+  - `UnsignedTransaction`에 정보를 채우고, 서명 및 송신 필요
+- `contract.callStatic.METHOD( ...args [ , overrides ] ) ⇒ Promise< any >`: 
+  - This does not actually change any state, but is free. This in some cases can be used to determine if a transaction will fail or succeed.
+
+
+

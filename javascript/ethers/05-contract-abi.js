@@ -28,12 +28,26 @@ async function main() {
     for (let each of funcname) {
         try {
             // console.log(each, iface.getSighash(each));
-            iface.getSighash(each)
+            // iface.getSighash(each)
+            console.log(each, iface.getSighash(each))
         }
         catch {
             console.log(`This contract doesn't support ERC20 function ${each}`)
             break;
         }
+    }
+    console.log("")
+    console.log("[[Events]]")
+    for (let key in iface.events) {
+        // event; console.log(iface.events[key] );
+        let args = new Array();
+        iface.events[key].inputs.map(function (each, index, array) {
+            args.push(each.name);
+        })
+        console.log(iface.events[key].name, args);
+        // for (let key of iface.events[key].inputs) {
+        //     // event parameters
+        // }
     }
 }
 

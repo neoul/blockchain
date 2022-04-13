@@ -14,7 +14,11 @@ async function main() {
     for (let i = 0; i < num; i++) {
         let block = await provider.getBlock(i);
         let txblocks = await provider.getBlockWithTransactions(block.hash);
-        console.log(txblocks);
+        // console.log(txblocks);
+        for (let tx of txblocks.transactions) {
+            let receipt = await provider.getTransactionReceipt(tx.hash);
+            console.log(receipt);
+        }
     }
 }
 
